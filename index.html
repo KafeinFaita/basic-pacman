@@ -77,6 +77,7 @@
     ]
 
     const random = Math.floor(Math.random() * 2)
+    let score = 0
 
     const coordinates = {
         pacman: {
@@ -84,11 +85,46 @@
             y: 1
         },
         ghostOne: {
-            x: 1,
+            x: 13,
             y: 23
         }
     }
-    let score = 0
+    
+    console.log(coordinates.pacman[0])
+
+    const moveGhost = setInterval(() => {
+        const ghostMovement = Math.floor(Math.random() * 4)
+
+        switch (ghostMovement) {
+            case 0: //left
+                if (frame[random][coordinates.ghostOne.y-1][coordinates.ghostOne.x ] != 2) {
+                    coordinates.ghostOne.y--
+                }
+                break;
+            case 1: //top
+                if (frame[random][coordinates.ghostOne.y][coordinates.ghostOne.x-1] != 2) {
+                    coordinates.ghostOne.x--
+                }
+                break;
+            case 2: //right
+                if (frame[random][coordinates.ghostOne.y+1][coordinates.ghostOne.x] != 2) {
+                    coordinates.ghostOne.y++
+                }
+                break;
+            default: //down
+                if (frame[random][coordinates.ghostOne.y][coordinates.ghostOne.x+1] != 2) {
+                    coordinates.ghostOne.x++
+                }
+                break;
+        }
+
+        display('ghostOne')
+        if (coordinates.pacman.x === coordinates.ghostOne.x && coordinates.pacman.y === coordinates.ghostOne.y) {
+            alert('Game Over')
+            document.onkeydown = null
+            clearInterval(moveGhost)
+        }
+    }, 500)
 
     document.onkeydown = e => {
         console.log(e.keyCode)
@@ -130,9 +166,14 @@
         updateScore(3)
         display('pacman')
 
-        if (frame[random][coordinates.pacman.y][coordinates.pacman.x] === frame[random][coordinates.ghostOne.y][coordinates.ghostOne.x]) {
+        // if (frame[random][coordinates.pacman.y][coordinates.pacman.x] === frame[random][coordinates.ghostOne.y][coordinates.ghostOne.x]) {
+        //     alert('Game Over')
+        //     document.onkeydown = null
+        // }
+        if (coordinates.pacman.x === coordinates.ghostOne.x && coordinates.pacman.y === coordinates.ghostOne.y) {
             alert('Game Over')
             document.onkeydown = null
+            clearInterval(moveGhost)
         }
     } 
 
