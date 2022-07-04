@@ -23,7 +23,9 @@ body {
 }
 
 .wall {
-    background-color: red;
+    background-image: url('img/wall.png');
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 #pacman {
@@ -33,8 +35,16 @@ body {
     width: 30px;
     height: 30px;
     position: absolute;
-    top: 30px;
-    left: 30px;
+
+}
+
+#ghostOne {
+    background-image: url('img/ghost.gif');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+    position: absolute;
 }
 
 .coin {
