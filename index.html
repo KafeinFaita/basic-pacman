@@ -11,6 +11,7 @@
     <div id="world">
         <div id="pacman"></div>
         <div id="ghostOne"></div>
+        <div id="ghostTwo"></div>
     </div>
     <div id="score">0</div>
 
@@ -87,43 +88,50 @@
         ghostOne: {
             x: 13,
             y: 23
-        }
+        },
+        ghostTwo: {
+            x: 1,
+            y: 23
+        },
+        
+
     }
-    
-    console.log(coordinates.pacman[0])
 
     const moveGhost = setInterval(() => {
-        const ghostMovement = Math.floor(Math.random() * 4)
+        
+        
+        for (let key in coordinates) {
+            const ghostMovement = Math.floor(Math.random() * 4)
+            if (key === 'pacman') continue
 
-        switch (ghostMovement) {
-            case 0: //left
-                if (frame[random][coordinates.ghostOne.y-1][coordinates.ghostOne.x ] != 2) {
-                    coordinates.ghostOne.y--
-                }
-                break;
-            case 1: //top
-                if (frame[random][coordinates.ghostOne.y][coordinates.ghostOne.x-1] != 2) {
-                    coordinates.ghostOne.x--
-                }
-                break;
-            case 2: //right
-                if (frame[random][coordinates.ghostOne.y+1][coordinates.ghostOne.x] != 2) {
-                    coordinates.ghostOne.y++
-                }
-                break;
-            default: //down
-                if (frame[random][coordinates.ghostOne.y][coordinates.ghostOne.x+1] != 2) {
-                    coordinates.ghostOne.x++
-                }
-                break;
+            switch (ghostMovement) {
+                case 0: //left
+                    if (frame[random][coordinates[key].y-1][coordinates[key].x ] != 2) {
+                        coordinates[key].y--
+                    }
+                    break;
+                case 1: //top
+                    if (frame[random][coordinates[key].y][coordinates[key].x-1] != 2) {
+                        coordinates[key].x--
+                    }
+                    break;
+                case 2: //right
+                    if (frame[random][coordinates[key].y+1][coordinates[key].x] != 2) {
+                        coordinates[key].y++
+                    }
+                    break;
+                default: //down
+                    if (frame[random][coordinates[key].y][coordinates[key].x+1] != 2) {
+                        coordinates[key].x++
+                    }
+                    break;
+            }
+
+            setGhostCollision(key)
         }
 
         display('ghostOne')
-        if (coordinates.pacman.x === coordinates.ghostOne.x && coordinates.pacman.y === coordinates.ghostOne.y) {
-            alert('Game Over')
-            document.onkeydown = null
-            clearInterval(moveGhost)
-        }
+        display('ghostTwo')
     }, 500)
 
     document.onkeydown = e => {
@@ -166,14 +174,9 @@
         updateScore(3)
         display('pacman')
 
-        // if (frame[random][coordinates.pacman.y][coordinates.pacman.x] === frame[random][coordinates.ghostOne.y][coordinates.ghostOne.x]) {
-        //     alert('Game Over')
-        //     document.onkeydown = null
-        // }
-        if (coordinates.pacman.x === coordinates.ghostOne.x && coordinates.pacman.y === coordinates.ghostOne.y) {
-            alert('Game Over')
-            document.onkeydown = null
-            clearInterval(moveGhost)
+        for (let key in coordinates) {
+            if (key === 'pacman') continue
+            setGhostCollision(key)
         }
     } 
 
@@ -182,8 +185,16 @@
         document.getElementById(id).style.left = `${coordinates[id].y*30}px`
     }
 
+    const setGhostCollision = (ghost) => {
+        if (coordinates.pacman.x === coordinates[ghost].x && coordinates.pacman.y === coordinates[ghost].y) {
+            alert('Game Over')
+            document.onkeydown = null
+            clearInterval(moveGhost)
+        }
+    }
+
     const createWorld = () => {
-        document.querySelectorAll(".row").forEach(row => row.remove()) //will recreate using for loop
+        document.querySelectorAll(".row").forEach(row => row.remove()) 
         let output = ''
 
         for (let x = 0; x < frame[random].length; x++) {
@@ -210,6 +221,7 @@
     createWorld()
     display('pacman')
     display('ghostOne')
+    display('ghostTwo')
 </script>
 
 
