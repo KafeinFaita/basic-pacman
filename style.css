@@ -56,6 +56,15 @@ body {
     position: absolute;
 }
 
+#ghostThree {
+    background-image: url('img/ghost.gif');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+}
+
 .coin {
     background-image: url('img/coin.gif');
     background-size: contain;

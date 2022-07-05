@@ -12,6 +12,7 @@
         <div id="pacman"></div>
         <div id="ghostOne"></div>
         <div id="ghostTwo"></div>
+        <div id="ghostThree"></div>
     </div>
     <div id="score">0</div>
 
@@ -93,6 +94,10 @@
             x: 1,
             y: 23
         },
+        ghostThree: {
+            x: 13,
+            y: 1
+        }
         
 
     }
@@ -132,6 +137,7 @@
 
         display('ghostOne')
         display('ghostTwo')
+        display('ghostThree')
     }, 500)
 
     document.onkeydown = e => {
@@ -222,6 +228,7 @@
     display('pacman')
     display('ghostOne')
     display('ghostTwo')
+    display('ghostThree')
 </script>
 
 
